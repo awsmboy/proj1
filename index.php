@@ -11,18 +11,6 @@
      <script src="typeahead.min.js"></script>
     <title>Hello, world!</title>
   </head>
-<style>
-  body{
-    background: rgba(0, 0, 0, 0.2);
-  }
-  .card{
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
-  }
-
-</style>
-
-
   <body>
  <div class="container pt-5">
   <div class="row justify-content-md-center">
@@ -35,7 +23,7 @@
     <body>
      
 
-<form action="process.php" method="post">
+<form>
      <div class="form-group ">
   <!--  <div class="input-group mb-3">
   
@@ -77,13 +65,11 @@
     </div>
   </div>
   -->
-
  <div class="form-group">
    <label for="iname">Item Name</label>
      <input type="text" class="form-control typeahead" id="idesc" data-show-subtext="true" data-live-search="true">
  <label for="qty">Quantity</label>
-  <input type="Number" class="form-control" id="quantity" name="quantity" value =1>
-  <input type="hidden" class="form-control" id="item" name="item">
+  <input type="Number" class="form-control" id="quantity" name="quantity">
  </div>
  
 <div class="form-group">
@@ -99,23 +85,20 @@
             <th class="text-center">
               quantity
            </th>
-          <th class="text-center">
-              Delete
-           </th>
+          
         </thead>
-        <tbody> </tbody>
+        <tbody> <tr id='addr0'></tr></tbody>
        
       </table>
     </div>
   </div>
   <button id="add_row" type="submit"class="btn btn-primary " >Add Row</button>
 <div class="form-group"></div>
-
   <button='delete_row1' type="submit"class="btn btn-primary "  onclick="deleteAllRows()">Delete All</button>
 
 
 </div>
-<button type="submit" onclick="tbltoarr()"class="btn btn-primary    ">CLick</button>
+
  <!-- <button type="submit" class="btn btn-primary">Sign in</button>
 -->
 </form>
@@ -129,9 +112,9 @@
        $(document).ready(function(){
       var i=0;
      $("#add_row").click(function(){ 
-     
+      $('#addr'+i).html("<td><input name='name"+i+"' type='text' placeholder='Name' class='form-control' value="+document.getElementById('idesc').value+"> </td><td><input  name='mail"+i+"' type='text' placeholder='Quantity'  value="+document.getElementById('quantity').value+"  class='form-control '></td><td><a id='delete_row' class='btn btn-primary pull-left'onclick='deleteRow(this)'>Delete</a></td>");
 
-      $('#tab_logic').append("<tr> <td><input name='name' type='text' placeholder='Name' class='form-control' value="+document.getElementById('idesc').value+"> </td><td><input  name='quantity' type='text'   value="+document.getElementById('quantity').value+"  class='form-control'></td><td><a id='delete_row' class='btn btn-primary pull-left'onclick='deleteRow(this)'>Delete</a></td></tr>");
+      $('#tab_logic').append('<tr id="addr'+(i+1)+'"></tr>');
       i++; 
   });
      
@@ -155,7 +138,8 @@ for (var i = tableHeaderRowCount; i < rowCount; i++) {
 
 
 }
-  }
+  $('#addr0').html("<tbody> <tr id='addr0'></tr></tbody>");
+}
 </script>
 <script>
 var $input = $(".typeahead");
@@ -187,24 +171,6 @@ $input.change(function() {
     // Nothing is active so it is a new value (or maybe empty value)
   }
 });
-</script>
-<script >
-var arr=[];
-  function tbltoarr()
-  { var i=0;
-    $("#tab_logic").find('tr').each(function(){
-      if(i!=0){
-         var val1 = $(this).find('td:eq(0) input[type="text"]').val();
-         var val2 = $(this).find('td:eq(1) input[type="text"]').val();
-         var obj= {idesc:val1,quantity:val2};
-          arr.push(obj);
-        console.log(obj);
-            }
-            i++;
-       })
-        console.log(document.getElementById("tab_logic").rows.length) 
-  $('#item').val(JSON.stringify(arr)); 
-}
 </script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
